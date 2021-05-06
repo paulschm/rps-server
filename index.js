@@ -27,14 +27,22 @@ const io = SocketIO(http, {
     cors: {}
 })
 
+const messages = []
+
 io.on('connection', (socket) => {
+    console.log('connect')
+
     socket.on('message', (arg) => {
-        arg.id = socket.id
-        console.log('Got a message:', arg)
-        socket.emit('serverMessage', arg)
+        const message = `${socket.id} is on screen ${arg.screen}`
+        messages.push(message)
+        io.emit('serverMessage', message)
     })
 
-    socket.emit('serverMessage', { screen: -1, id: socket.id})
+    socket.on('disconnect', () => {
+        console.log('disconnect')
+    })
+
+    socket.emit('serverMessages', messages)
 })
 
 const PORT = process.env.PORT || 8081
