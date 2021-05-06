@@ -36,6 +36,7 @@ io.on('connection', (socket) => {
         const message = `${socket.id} is on screen ${arg.screen}`
         messages.push(message)
         io.emit('serverMessage', message)
+        console.log(message)
     })
 
     socket.on('disconnect', () => {
