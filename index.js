@@ -28,15 +28,13 @@ const io = SocketIO(http, {
 })
 
 io.on('connection', (socket) => {
-    console.log('got a connection')
-
     socket.on('message', (arg) => {
+        arg.id = socket.id
         console.log('Got a message:', arg)
-        setTimeout(() => {
-            socket.emit('serverMessage', 'Hello from server')
-        }, 2000)
+        socket.emit('serverMessage', arg)
     })
 
+    socket.emit('serverMessage', { screen: -1, id: socket.id})
 })
 
 const PORT = process.env.PORT || 8081
