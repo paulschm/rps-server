@@ -7,19 +7,19 @@ const SocketIO = require('socket.io')
 // as communication will be based on socket.io only in the first steps
 // later we will add a game statistics REST API
 
-// const corsOptions = {
-//     origin: 'http://localhost:8080'
-// }
+const corsOptions = {
+    origin: 'http://localhost:8080'
+}
 
-// app.use(cors(corsOptions))
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: true }))
+app.use(cors(corsOptions))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-// app.get('/', (req, res) => {
-//     res.json({
-//         message: 'Welcome to Rock-Paper-Scissors API'
-//     })
-// })
+app.get('/', (req, res) => {
+    res.json({
+        message: 'Welcome to Rock-Paper-Scissors API'
+    })
+})
 
 const http = require('http').createServer(app)
 
@@ -30,17 +30,12 @@ const io = SocketIO(http, {
 const messages = []
 
 io.on('connection', (socket) => {
-    console.log('connect')
+    console.log('Got a connection')
 
     socket.on('message', (arg) => {
         const message = `${socket.id} is on screen ${arg.screen}`
         messages.push(message)
         io.emit('serverMessage', message)
-        console.log(message)
-    })
-
-    socket.on('disconnect', () => {
-        console.log('disconnect')
     })
 
     socket.emit('serverMessages', messages)
