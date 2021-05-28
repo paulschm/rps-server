@@ -3,15 +3,7 @@ const app = express()
 const cors = require('cors')
 const SocketIO = require('socket.io')
 
-// we don't need the REST functionality right now
-// as communication will be based on socket.io only in the first steps
-// later we will add a game statistics REST API
-
-const corsOptions = {
-    origin: 'http://localhost:8080'
-}
-
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
