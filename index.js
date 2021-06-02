@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
-const cors = require('cors')
 const SocketIO = require('socket.io')
+const cors = require('cors')
+const Game = require('./game')
+
 
 app.use(cors())
 app.use(express.json())
@@ -19,19 +21,7 @@ const io = SocketIO(http, {
     cors: {}
 })
 
-const messages = []
-
-io.on('connection', (socket) => {
-    console.log('Got a connection')
-
-    socket.on('message', (arg) => {
-        const message = `${socket.id} is on screen ${arg.screen}`
-        messages.push(message)
-        io.emit('serverMessage', message)
-    })
-
-    socket.emit('serverMessages', messages)
-})
+let game = new Game(io)
 
 const PORT = process.env.PORT || 8081
 
