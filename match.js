@@ -45,6 +45,33 @@ class Match {
             - return this.player2 if player2 wins
             - return null if there is a draw
         */
+
+        if (this.player1.turn == 'rock') {
+            if (this.player2.turn == 'rock')
+                return null
+            if (this.player2.turn == 'paper')
+                return this.player2
+            if (this.player2.turn == 'scissors')
+                return this.player1
+        }
+
+        if (this.player1.turn == 'paper') {
+            if (this.player2.turn == 'rock')
+                return this.player1
+            if (this.player2.turn == 'paper')
+                return null
+            if (this.player2.turn == 'scissors')
+                return this.player2
+        }
+
+        if (this.player1.turn == 'scissors') {
+            if (this.player2.turn == 'rock')
+                return this.player2
+            if (this.player2.turn == 'paper')
+                return this.player1
+            if (this.player2.turn == 'scissors')
+                return null
+        }
         
         return null
     }
