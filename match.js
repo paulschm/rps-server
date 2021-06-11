@@ -45,7 +45,7 @@ class Match {
             - return this.player2 if player2 wins
             - return null if there is a draw
         */
-
+        
         return null
     }
 }
