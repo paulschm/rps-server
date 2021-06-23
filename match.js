@@ -16,13 +16,17 @@ class Match {
 
     check() {
         if (this.finished()) {
-            const winner = this.whoWins()
+            let winner = this.whoWins()
 
-            let result = {
-                winner: {
+            if (winner != null) {
+                winner = {
                     username: winner.username,
                     turn: winner.turn
-                },
+                }
+            }
+
+            let matchResult = {
+                winner: winner,
                 players: [
                     {
                         username: this.player1.username,
@@ -35,8 +39,8 @@ class Match {
                 ]
             }
 
-            this.player1.emit('matchResult', result)
-            this.player2.emit('matchResult', result)
+            this.player1.emit('matchResult', matchResult)
+            this.player2.emit('matchResult', matchResult)
         }
     }
 
